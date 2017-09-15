@@ -1,3 +1,9 @@
 [submodule "roles/net-backup"]
 	path = roles/net-backup
 	url = git@github.com:network-automation/ansible-role-net-backup.git
+[submodule "roles/net-int-config"]
+	path = roles/net-int-config
+	url = git@github.com:network-automation/ansible-role-net-int-config.git
+[submodule "roles/net-vlan-config"]
+	path = roles/net-vlan-config
+	url = git@github.com:network-automation/ansible-role-net-vlan-config.git

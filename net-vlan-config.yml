@@ -1,0 +1,8 @@
+---
+- hosts: cil-core
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - include_role:
+        name: net-vlan-config
