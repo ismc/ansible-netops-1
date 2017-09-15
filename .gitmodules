@@ -7,3 +7,6 @@
 [submodule "roles/net-vlan-config"]
 	path = roles/net-vlan-config
 	url = git@github.com:network-automation/ansible-role-net-vlan-config.git
+[submodule "roles/net-version"]
+	path = roles/net-version
+	url = git@github.com:network-automation/ansible-role-net-version.git
