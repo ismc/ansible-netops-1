@@ -10,3 +10,6 @@
 [submodule "roles/net-version"]
 	path = roles/net-version
 	url = git@github.com:network-automation/ansible-role-net-version.git
+[submodule "roles/ansible-tower"]
+	path = roles/ansible-tower
+	url = git@github.com:network-automation/ansible-role-ansible-tower.git
