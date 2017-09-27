@@ -13,3 +13,6 @@
 [submodule "roles/net-backup"]
 	path = roles/net-backup
 	url = https://github.com/network-automation/ansible-role-net-backup.git
+[submodule "inventory/cil"]
+	path = inventory/cil
+	url = https://github.com/ismc/cil-inventory.git
