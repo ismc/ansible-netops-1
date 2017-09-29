@@ -8,10 +8,17 @@
         net_hostname: "{{ inventory_hostname.split('.')[0] }}"
         net_domain_name: "{{ inventory_hostname.split('.')[1:] | join('.') }}"
 
-    - debug: var=net_hostname
-    - debug: var=net_domain_name
-
     - name: Set the system attributes
       net_system:
         hostname: "{{ net_hostname }}"
         domain_name: "{{ net_domain_name }}"
+
+    - name: Set the name servers 
+      net_system:
+        name_servers: "{{ site_name_servers }}"
+      when: site_name_servers is defined
+
+    - name: Set the domain search
+      net_system:
+        name_servers: "{{ site_domain_search }}"
+      when: site_domain_search is defined

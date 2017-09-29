@@ -1,0 +1,39 @@
+---
+- hosts: all
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - set_fact:
+        login_banner_file: "{{ item }}"
+      with_first_found:
+        - files:
+          - "{{ inventory_dir }}/host_data/{{ inventory_hostname }}/site_login_banner.txt"
+          - "{{ inventory_dir }}/host_data/all/site_login_banner.txt"
+          - "{{ inventory_dir }}/host_data/{{ inventory_hostname }}/site_banner.txt"
+          - "{{ inventory_dir }}/host_data/all/site_banner.txt"
+          skip: true
+
+    - name: configure the login banner
+      ios_banner:
+        banner: login
+        text: "{{ lookup('file', login_banner_file) }}"
+        state: present
+      when: login_banner_file is defined
+
+    - set_fact:
+        motd_file: "{{ item }}"
+      with_first_found:
+        - files:
+          - "{{ inventory_dir }}/host_data/{{ inventory_hostname }}/site_motd.txt"
+          - "{{ inventory_dir }}/host_data/all/site_motd.txt"
+          - "{{ inventory_dir }}/host_data/{{ inventory_hostname }}/site_banner.txt"
+          - "{{ inventory_dir }}/host_data/all/site_banner.txt"
+          skip: true
+
+    - name: configure the MOTD
+      ios_banner:
+        banner: motd
+        text: "{{ lookup('file', motd_file) }}"
+        state: present
+      when: motd_file is defined
