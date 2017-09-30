@@ -8,15 +8,13 @@
         login_banner_file: "{{ item }}"
       with_first_found:
         - files:
-          - "{{ inventory_dir }}/host_data/{{ inventory_hostname }}/site_login_banner.txt"
-          - "{{ inventory_dir }}/host_data/all/site_login_banner.txt"
-          - "{{ inventory_dir }}/host_data/{{ inventory_hostname }}/site_banner.txt"
-          - "{{ inventory_dir }}/host_data/all/site_banner.txt"
+          - "{{ inventory_dir }}/host_data/{{ inventory_hostname }}/banner.txt"
+          - "{{ inventory_dir }}/host_data/all/banner.txt"
           skip: true
 
     - name: configure the login banner
-      ios_banner:
-        banner: login
+      net_banner:
+        banner: "{{ 'motd' if ansible_network_os == 'nxos' else 'login' }}"
         text: "{{ lookup('file', login_banner_file) }}"
         state: present
       when: login_banner_file is defined
@@ -25,15 +23,13 @@
         motd_file: "{{ item }}"
       with_first_found:
         - files:
-          - "{{ inventory_dir }}/host_data/{{ inventory_hostname }}/site_motd.txt"
-          - "{{ inventory_dir }}/host_data/all/site_motd.txt"
-          - "{{ inventory_dir }}/host_data/{{ inventory_hostname }}/site_banner.txt"
-          - "{{ inventory_dir }}/host_data/all/site_banner.txt"
+          - "{{ inventory_dir }}/host_data/{{ inventory_hostname }}/motd.txt"
+          - "{{ inventory_dir }}/host_data/all/motd.txt"
           skip: true
 
     - name: configure the MOTD
-      ios_banner:
+      net_banner:
         banner: motd
         text: "{{ lookup('file', motd_file) }}"
         state: present
-      when: motd_file is defined
+      when: motd_file is defined and ansible_network_os != 'nxos'

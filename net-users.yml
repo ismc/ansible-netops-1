@@ -1,0 +1,19 @@
+---
+- hosts: all
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - include_vars: "{{ item }}"
+      with_first_found:
+        - files:
+          - "{{ inventory_dir }}/host_data/{{ inventory_hostname }}/net-users.yml"
+          - "{{ inventory_dir }}/host_data/all/net-users.yml"
+          skip: true
+
+    - name: Add users to system
+      net_user:
+        aggregate: "{{ net_user_list }}"
+#        privilege: 15
+        state: present
+      when: net_user_list is defined
